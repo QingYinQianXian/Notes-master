@@ -1,0 +1,6 @@
+﻿# Gradle wrapper
+gradle/wrapper/gradle-*.zip
+
+# Compiled output
+/build/
+/bin/

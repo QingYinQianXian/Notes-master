@@ -1,0 +1,68 @@
+plugins {
+    id 'com.android.application'
+    // 不需要 kotlin-android 插件
+}
+
+android {
+    namespace 'net.micode.notes'
+    compileSdk 34
+    buildToolsVersion "34.0.0"
+
+    defaultConfig {
+        applicationId "net.micode.notes"
+        minSdk 14
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile '../AndroidManifest.xml'
+            java.srcDirs = ['../src']
+            res.srcDirs = ['../res']
+            assets.srcDirs = ['../assets']
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation('org.apache.httpcomponents:httpclient:4.5.14') {
+        exclude group: 'org.jetbrains.kotlin'  // 排除该库可能引入的 Kotlin 模块
+    }
+    implementation 'androidx.core:core:1.12.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    // 显式指定 Kotlin 标准库版本
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
+}
+
+// 统一版本并替换 jdk7/jdk8 变体为标准库
+configurations.all {
+    resolutionStrategy {
+        // 强制所有 Kotlin 模块使用相同版本
+        force "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
+        force "org.jetbrains.kotlin:kotlin-stdlib-common:1.8.22"
+
+        // 将 kotlin-stdlib-jdk7 和 kotlin-stdlib-jdk8 替换为 kotlin-stdlib
+        eachDependency { details ->
+            if (details.requested.group == 'org.jetbrains.kotlin') {
+                if (details.requested.name in ['kotlin-stdlib-jdk7', 'kotlin-stdlib-jdk8']) {
+                    details.useTarget group: details.requested.group, name: 'kotlin-stdlib', version: '1.8.22'
+                }
+            }
+        }
+    }
+}
