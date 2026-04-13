@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\project\Notes-master\AndroidManifest.xml:18:1-153:12
-INJECTED from D:\project\Notes-master\AndroidManifest.xml:18:1-153:12
-INJECTED from D:\project\Notes-master\AndroidManifest.xml:18:1-153:12
-INJECTED from D:\project\Notes-master\AndroidManifest.xml:18:1-153:12
+ADDED from D:\project\Notes-master\AndroidManifest.xml:18:1-159:12
+INJECTED from D:\project\Notes-master\AndroidManifest.xml:18:1-159:12
+INJECTED from D:\project\Notes-master\AndroidManifest.xml:18:1-159:12
+INJECTED from D:\project\Notes-master\AndroidManifest.xml:18:1-159:12
 MERGED from [com.google.android.material:material:1.9.0] D:\.gradle\caches\transforms-3\7a6e001224e0768de8d86ba349b4fd2b\transformed\material-1.9.0\AndroidManifest.xml:17:1-26:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] D:\.gradle\caches\transforms-3\965a83c0f44625046e985b973af174c9\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] D:\.gradle\caches\transforms-3\7777969b156774a4bea6f16de47f979f\transformed\jetified-appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -183,8 +183,8 @@ ADDED from D:\project\Notes-master\AndroidManifest.xml:32:5-81
 	android:name
 		ADDED from D:\project\Notes-master\AndroidManifest.xml:32:22-78
 application
-ADDED from D:\project\Notes-master\AndroidManifest.xml:34:5-152:19
-INJECTED from D:\project\Notes-master\AndroidManifest.xml:34:5-152:19
+ADDED from D:\project\Notes-master\AndroidManifest.xml:34:5-158:19
+INJECTED from D:\project\Notes-master\AndroidManifest.xml:34:5-158:19
 MERGED from [com.google.android.material:material:1.9.0] D:\.gradle\caches\transforms-3\7a6e001224e0768de8d86ba349b4fd2b\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
 MERGED from [com.google.android.material:material:1.9.0] D:\.gradle\caches\transforms-3\7a6e001224e0768de8d86ba349b4fd2b\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] D:\.gradle\caches\transforms-3\965a83c0f44625046e985b973af174c9\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -351,28 +351,36 @@ ADDED from D:\project\Notes-master\AndroidManifest.xml:130:9-135:20
 		ADDED from D:\project\Notes-master\AndroidManifest.xml:134:13-75
 	android:name
 		ADDED from D:\project\Notes-master\AndroidManifest.xml:131:13-50
-activity#net.micode.notes.ui.NotesPreferenceActivity
-ADDED from D:\project\Notes-master\AndroidManifest.xml:137:9-142:20
+activity#net.micode.notes.ui.NoteVersionHistoryActivity
+ADDED from D:\project\Notes-master\AndroidManifest.xml:137:9-141:20
 	android:label
-		ADDED from D:\project\Notes-master\AndroidManifest.xml:139:13-54
-	android:launchMode
-		ADDED from D:\project\Notes-master\AndroidManifest.xml:140:13-43
+		ADDED from D:\project\Notes-master\AndroidManifest.xml:139:13-57
 	android:theme
-		ADDED from D:\project\Notes-master\AndroidManifest.xml:141:13-60
+		ADDED from D:\project\Notes-master\AndroidManifest.xml:140:13-45
 	android:name
-		ADDED from D:\project\Notes-master\AndroidManifest.xml:138:13-71
+		ADDED from D:\project\Notes-master\AndroidManifest.xml:138:13-58
+activity#net.micode.notes.ui.NotesPreferenceActivity
+ADDED from D:\project\Notes-master\AndroidManifest.xml:143:9-148:20
+	android:label
+		ADDED from D:\project\Notes-master\AndroidManifest.xml:145:13-54
+	android:launchMode
+		ADDED from D:\project\Notes-master\AndroidManifest.xml:146:13-43
+	android:theme
+		ADDED from D:\project\Notes-master\AndroidManifest.xml:147:13-60
+	android:name
+		ADDED from D:\project\Notes-master\AndroidManifest.xml:144:13-71
 service#net.micode.notes.gtask.remote.GTaskSyncService
-ADDED from D:\project\Notes-master\AndroidManifest.xml:144:9-147:19
+ADDED from D:\project\Notes-master\AndroidManifest.xml:150:9-153:19
 	android:exported
-		ADDED from D:\project\Notes-master\AndroidManifest.xml:146:13-37
+		ADDED from D:\project\Notes-master\AndroidManifest.xml:152:13-37
 	android:name
-		ADDED from D:\project\Notes-master\AndroidManifest.xml:145:13-74
+		ADDED from D:\project\Notes-master\AndroidManifest.xml:151:13-74
 meta-data#android.app.default_searchable
-ADDED from D:\project\Notes-master\AndroidManifest.xml:149:9-151:52
+ADDED from D:\project\Notes-master\AndroidManifest.xml:155:9-157:52
 	android:value
-		ADDED from D:\project\Notes-master\AndroidManifest.xml:151:13-49
+		ADDED from D:\project\Notes-master\AndroidManifest.xml:157:13-49
 	android:name
-		ADDED from D:\project\Notes-master\AndroidManifest.xml:150:13-58
+		ADDED from D:\project\Notes-master\AndroidManifest.xml:156:13-58
 provider#androidx.startup.InitializationProvider
 ADDED from [androidx.emoji2:emoji2:1.2.0] D:\.gradle\caches\transforms-3\870579bb6a02c4a9fcf44cd76a070088\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
 MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] D:\.gradle\caches\transforms-3\a7dda3e8c97e6492492c13a00b16e584\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:26:9-34:20

@@ -3382,6 +3382,7 @@ id material_timepicker_view
 id material_value_index
 id matrix
 id menu_alert
+id menu_clear_all_versions
 id menu_delete
 id menu_delete_remind
 id menu_export_text
@@ -3394,6 +3395,7 @@ id menu_send_to_desktop
 id menu_setting
 id menu_share
 id menu_sync
+id menu_version_history
 id message
 id middle
 id mini
@@ -3620,6 +3622,8 @@ id tv_name
 id tv_time
 id tv_title
 id tv_title_bar
+id tv_version_date
+id tv_version_snippet
 id unchecked
 id uniform
 id unlabeled
@@ -3838,6 +3842,8 @@ layout note_item
 layout note_list
 layout note_list_dropdown_menu
 layout note_list_footer
+layout note_version_item
+layout note_version_list
 layout notification_action
 layout notification_action_tombstone
 layout notification_template_custom_big
@@ -3857,6 +3863,7 @@ menu note_edit
 menu note_list
 menu note_list_dropdown
 menu note_list_options
+menu note_version_menu
 menu sub_folder
 plurals mtrl_badge_content_description
 plurals search_results_title
@@ -3915,7 +3922,11 @@ string call_record_folder_name
 string character_counter_content_description
 string character_counter_overflowed_content_description
 string character_counter_pattern
+string clear_all_versions
+string clear_all_versions_message
+string clear_all_versions_title
 string clear_text_end_icon_content_description
+string clear_versions_success
 string datetime_dialog_cancel
 string datetime_dialog_ok
 string delete_remind_time_message
@@ -4011,6 +4022,7 @@ string menu_share
 string menu_sync
 string menu_sync_cancel
 string menu_title_select_folder
+string menu_version_history
 string mtrl_badge_numberless_content_description
 string mtrl_checkbox_button_icon_path_checked
 string mtrl_checkbox_button_icon_path_group_name
@@ -4073,6 +4085,7 @@ string mtrl_switch_track_decoration_path
 string mtrl_switch_track_path
 string mtrl_timepicker_cancel
 string mtrl_timepicker_confirm
+string no_version_history
 string note_alert_expired
 string note_link_email
 string note_link_other
@@ -4105,6 +4118,9 @@ string preferences_menu_remove_account
 string preferences_title
 string preferences_toast_cannot_change_account
 string preferences_toast_success_set_accout
+string restore_failed
+string restore_success
+string restore_version
 string search
 string search_hint
 string search_label
@@ -4126,6 +4142,8 @@ string ticker_cancel
 string ticker_fail
 string ticker_success
 string ticker_syncing
+string version_preview_message
+string version_preview_title
 string widget_havenot_content
 string widget_under_visit_mode
 style AlertDialog_AppCompat

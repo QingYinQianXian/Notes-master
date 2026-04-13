@@ -120,6 +120,8 @@ public class NoteEditActivity extends Activity implements OnClickListener,
 
     private static final String TAG = "NoteEditActivity";
 
+    private static final int REQUEST_CODE_VERSION_HISTORY = 100;
+
     private HeadViewHolder mNoteHeaderHolder;
 
     private View mHeadViewPanel;
@@ -319,6 +321,16 @@ public class NoteEditActivity extends Activity implements OnClickListener,
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_VERSION_HISTORY && resultCode == RESULT_OK) {
+            mWorkingNote = WorkingNote.load(this, mWorkingNote.getNoteId());
+            mWorkingNote.setOnSettingStatusChangedListener(this);
+            initNoteScreen();
+        }
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         /**
@@ -430,7 +442,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         if (id == R.id.btn_set_bg_color) {
             mNoteBgColorSelector.setVisibility(View.VISIBLE);
             findViewById(sBgSelectorSelectionMap.get(mWorkingNote.getBgColorId())).setVisibility(
-                    -                    View.VISIBLE);
+                    View.VISIBLE);
         } else if (sBgSelectorBtnsMap.containsKey(id)) {
             findViewById(sBgSelectorSelectionMap.get(mWorkingNote.getBgColorId())).setVisibility(
                     View.GONE);
@@ -539,9 +551,21 @@ public class NoteEditActivity extends Activity implements OnClickListener,
             setReminder();
         } else if (id == R.id.menu_delete_remind) {
             mWorkingNote.setAlertDate(0, false);
+        } else if (id == R.id.menu_version_history) {
+            showVersionHistory();
         }
-        // 如果都不匹配，不执行任何操作，但最后仍然返回 true（保持与原 switch 行为一致）
         return true;
+    }
+
+    private void showVersionHistory() {
+        if (!mWorkingNote.existInDatabase()) {
+            saveNote();
+        }
+        if (mWorkingNote.existInDatabase()) {
+            Intent intent = new Intent(this, NoteVersionHistoryActivity.class);
+            intent.putExtra(NoteVersionHistoryActivity.EXTRA_NOTE_ID, mWorkingNote.getNoteId());
+            startActivityForResult(intent, REQUEST_CODE_VERSION_HISTORY);
+        }
     }
 
     private void setReminder() {

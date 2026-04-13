@@ -30,6 +30,10 @@
     <string name="app_widget4x4">Notes 4x4</string>
     <string name="button_delete">Delete</string>
     <string name="call_record_folder_name">Call notes</string>
+    <string name="clear_all_versions">Clear all versions</string>
+    <string name="clear_all_versions_message">Are you sure you want to delete all version history for this note?</string>
+    <string name="clear_all_versions_title">Clear all versions</string>
+    <string name="clear_versions_success">Cleared %d versions</string>
     <string name="datetime_dialog_cancel">cancel</string>
     <string name="datetime_dialog_ok">set</string>
     <string name="delete_remind_time_message">Delete reminder successfully</string>
@@ -80,6 +84,8 @@
     <string name="menu_sync">Sync</string>
     <string name="menu_sync_cancel">Cancel syncing</string>
     <string name="menu_title_select_folder">Select folder</string>
+    <string name="menu_version_history">Version History</string>
+    <string name="no_version_history">No version history</string>
     <string name="note_alert_expired">Expired</string>
     <string name="note_link_email">Send email</string>
     <string name="note_link_other">Open map</string>
@@ -107,6 +113,9 @@
     <string name="preferences_title">Settings</string>
     <string name="preferences_toast_cannot_change_account">Cannot change the account because sync is in progress</string>
     <string name="preferences_toast_success_set_accout">%1$s has been set as the sync account</string>
+    <string name="restore_failed">Failed to restore version</string>
+    <string name="restore_success">Version restored successfully</string>
+    <string name="restore_version">Restore</string>
     <string name="search">Notes</string>
     <string name="search_hint">Search notes</string>
     <string name="search_label">Searching Notes</string>
@@ -121,6 +130,8 @@
     <string name="ticker_fail">Sync is failed</string>
     <string name="ticker_success">Sync is successful</string>
     <string name="ticker_syncing">Syncing notes...</string>
+    <string name="version_preview_message">Date: %1$s\n\nContent:\n%2$s</string>
+    <string name="version_preview_title">Version Preview</string>
     <string name="widget_havenot_content">No associated note found, click to create associated note.</string>
     <string name="widget_under_visit_mode">Privacy mode，can not see note content</string>
     <style name="HighlightTextAppearancePrimary">
@@ -133,7 +144,6 @@
     </style>
     <style name="NoteActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:displayOptions"/>
-        <item name="android:visibility">gone</item>
     </style>
     <style name="NoteTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/NoteActionBarStyle</item>

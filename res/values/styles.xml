@@ -64,6 +64,5 @@
 
     <style name="NoteActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:displayOptions" />
-        <item name="android:visibility">gone</item>
     </style>
 </resources>

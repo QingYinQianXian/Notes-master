@@ -30,12 +30,14 @@ import net.micode.notes.data.Notes.NoteColumns;
 public class NotesDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "note.db";
 
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 5;
 
     public interface TABLE {
         public static final String NOTE = "note";
 
         public static final String DATA = "data";
+
+        public static final String VERSION = "note_version";
     }
 
     private static final String TAG = "NotesDatabaseHelper";
@@ -81,6 +83,20 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_DATA_NOTE_ID_INDEX_SQL =
         "CREATE INDEX IF NOT EXISTS note_id_index ON " +
         TABLE.DATA + "(" + DataColumns.NOTE_ID + ");";
+
+    private static final String CREATE_VERSION_TABLE_SQL =
+        "CREATE TABLE " + TABLE.VERSION + "(" +
+            Notes.VersionColumns.ID + " INTEGER PRIMARY KEY," +
+            Notes.VersionColumns.NOTE_ID + " INTEGER NOT NULL," +
+            Notes.VersionColumns.VERSION_SNIPPET + " TEXT NOT NULL DEFAULT ''," +
+            Notes.VersionColumns.VERSION_CONTENT + " TEXT NOT NULL DEFAULT ''," +
+            Notes.VersionColumns.VERSION_CREATED_DATE + " INTEGER NOT NULL DEFAULT (strftime('%s','now') * 1000)," +
+            Notes.VersionColumns.VERSION_BG_COLOR_ID + " INTEGER NOT NULL DEFAULT 0" +
+        ")";
+
+    private static final String CREATE_VERSION_NOTE_ID_INDEX_SQL =
+        "CREATE INDEX IF NOT EXISTS version_note_id_index ON " +
+        TABLE.VERSION + "(" + Notes.VersionColumns.NOTE_ID + ");";
 
     /**
      * Increase folder's note count when move note to the folder
@@ -182,6 +198,14 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
         "   WHERE " + DataColumns.NOTE_ID + "=old." + NoteColumns.ID + ";" +
         " END";
 
+    private static final String NOTE_DELETE_VERSION_ON_DELETE_TRIGGER =
+        "CREATE TRIGGER delete_version_on_delete " +
+        " AFTER DELETE ON " + TABLE.NOTE +
+        " BEGIN" +
+        "  DELETE FROM " + TABLE.VERSION +
+        "   WHERE " + Notes.VersionColumns.NOTE_ID + "=old." + NoteColumns.ID + ";" +
+        " END";
+
     /**
      * Delete notes belong to folder which has been deleted
      */
@@ -222,6 +246,7 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TRIGGER IF EXISTS decrease_folder_count_on_update");
         db.execSQL("DROP TRIGGER IF EXISTS decrease_folder_count_on_delete");
         db.execSQL("DROP TRIGGER IF EXISTS delete_data_on_delete");
+        db.execSQL("DROP TRIGGER IF EXISTS delete_version_on_delete");
         db.execSQL("DROP TRIGGER IF EXISTS increase_folder_count_on_insert");
         db.execSQL("DROP TRIGGER IF EXISTS folder_delete_notes_on_delete");
         db.execSQL("DROP TRIGGER IF EXISTS folder_move_notes_on_trash");
@@ -230,6 +255,7 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(NOTE_DECREASE_FOLDER_COUNT_ON_UPDATE_TRIGGER);
         db.execSQL(NOTE_DECREASE_FOLDER_COUNT_ON_DELETE_TRIGGER);
         db.execSQL(NOTE_DELETE_DATA_ON_DELETE_TRIGGER);
+        db.execSQL(NOTE_DELETE_VERSION_ON_DELETE_TRIGGER);
         db.execSQL(NOTE_INCREASE_FOLDER_COUNT_ON_INSERT_TRIGGER);
         db.execSQL(FOLDER_DELETE_NOTES_ON_DELETE_TRIGGER);
         db.execSQL(FOLDER_MOVE_NOTES_ON_TRASH_TRIGGER);
@@ -287,6 +313,12 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DATA_UPDATE_NOTE_CONTENT_ON_DELETE_TRIGGER);
     }
 
+    public void createVersionTable(SQLiteDatabase db) {
+        db.execSQL(CREATE_VERSION_TABLE_SQL);
+        db.execSQL(CREATE_VERSION_NOTE_ID_INDEX_SQL);
+        Log.d(TAG, "version table has been created");
+    }
+
     static synchronized NotesDatabaseHelper getInstance(Context context) {
         if (mInstance == null) {
             mInstance = new NotesDatabaseHelper(context);
@@ -298,6 +330,7 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         createNoteTable(db);
         createDataTable(db);
+        createVersionTable(db);
     }
 
     @Override
@@ -320,6 +353,11 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
         if (oldVersion == 3) {
             upgradeToV4(db);
             oldVersion++;
+        }
+
+        if (oldVersion < 5) {
+            upgradeToV5(db);
+            oldVersion = 5;
         }
 
         if (reCreateTriggers) {
@@ -358,5 +396,10 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
     private void upgradeToV4(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + TABLE.NOTE + " ADD COLUMN " + NoteColumns.VERSION
                 + " INTEGER NOT NULL DEFAULT 0");
+    }
+
+    private void upgradeToV5(SQLiteDatabase db) {
+        createVersionTable(db);
+        reCreateNoteTableTriggers(db);
     }
 }

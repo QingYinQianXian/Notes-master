@@ -33,13 +33,10 @@ import net.micode.notes.tool.ResourceParser.NoteBgResources;
 
 
 public class WorkingNote {
-    // Note for the working note
     private Note mNote;
-    // Note Id
     private long mNoteId;
-    // Note content
     private String mContent;
-    // Note mode
+    private String mOldContent;
     private int mMode;
 
     private long mAlertDate;
@@ -158,6 +155,7 @@ public class WorkingNote {
                     String type = cursor.getString(DATA_MIME_TYPE_COLUMN);
                     if (DataConstants.NOTE.equals(type)) {
                         mContent = cursor.getString(DATA_CONTENT_COLUMN);
+                        mOldContent = mContent;
                         mMode = cursor.getInt(DATA_MODE_COLUMN);
                         mNote.setTextDataId(cursor.getLong(DATA_ID_COLUMN));
                     } else if (DataConstants.CALL_NOTE.equals(type)) {
@@ -189,18 +187,24 @@ public class WorkingNote {
 
     public synchronized boolean saveNote() {
         if (isWorthSaving()) {
-            if (!existInDatabase()) {
+            boolean isNewNote = !existInDatabase();
+            if (isNewNote) {
                 if ((mNoteId = Note.getNewNoteId(mContext, mFolderId)) == 0) {
                     Log.e(TAG, "Create new note fail with id:" + mNoteId);
                     return false;
                 }
             }
 
+            boolean contentChanged = !TextUtils.equals(mOldContent, mContent);
+
             mNote.syncNote(mContext, mNoteId);
 
-            /**
-             * Update widget content if there exist any widget of this note
-             */
+            if (contentChanged && !TextUtils.isEmpty(mContent)) {
+                String snippet = mContent.length() > 100 ? mContent.substring(0, 100) : mContent;
+                NoteVersionManager.saveVersion(mContext, mNoteId, snippet, mContent, mBgColorId);
+                mOldContent = mContent;
+            }
+
             if (mWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID
                     && mWidgetType != Notes.TYPE_WIDGET_INVALIDE
                     && mNoteSettingStatusListener != null) {

@@ -24,6 +24,8 @@ public class Notes {
     public static final int TYPE_FOLDER   = 1;
     public static final int TYPE_SYSTEM   = 2;
 
+    public static final Uri CONTENT_VERSION_URI = Uri.parse("content://" + AUTHORITY + "/version");
+
     /**
      * Following IDs are system folders' identifiers
      * {@link Notes#ID_ROOT_FOLDER } is default folder
@@ -275,5 +277,20 @@ public class Notes {
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/call_note";
 
         public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/call_note");
+    }
+
+    public interface VersionColumns {
+        public static final String ID = "_id";
+        public static final String NOTE_ID = "note_id";
+        public static final String VERSION_SNIPPET = "version_snippet";
+        public static final String VERSION_CONTENT = "version_content";
+        public static final String VERSION_CREATED_DATE = "version_created_date";
+        public static final String VERSION_BG_COLOR_ID = "version_bg_color_id";
+    }
+
+    public static final class NoteVersion implements VersionColumns {
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/note_version";
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/note_version";
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/note_version");
     }
 }

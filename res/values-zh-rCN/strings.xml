@@ -120,7 +120,20 @@
     <string name="datetime_dialog_ok">设置</string>
     <string name="datetime_dialog_cancel">取消</string>
     <plurals name="search_results_title">
-        <item quantity="other"><xliff:g id="NUMBER">%1$s</xliff:g> 条符合“<xliff:g id="SEARCH">%2$s</xliff:g>”的搜索结果</item>
+        <item quantity="other"><xliff:g id="NUMBER">%1$s</xliff:g> 条符合"<xliff:g id="SEARCH">%2$s</xliff:g>"的搜索结果</item>
     </plurals>
+
+    <!-- Version History -->
+    <string name="menu_version_history">版本历史</string>
+    <string name="no_version_history">暂无版本历史</string>
+    <string name="version_preview_title">版本预览</string>
+    <string name="version_preview_message">时间：%1$s\n\n内容：\n%2$s</string>
+    <string name="restore_version">恢复此版本</string>
+    <string name="restore_success">版本恢复成功</string>
+    <string name="restore_failed">版本恢复失败</string>
+    <string name="clear_all_versions">清除所有版本</string>
+    <string name="clear_all_versions_title">清除所有版本</string>
+    <string name="clear_all_versions_message">确定要删除该便签的所有版本历史吗？</string>
+    <string name="clear_versions_success">已清除 %d 个版本</string>
 
 </resources>

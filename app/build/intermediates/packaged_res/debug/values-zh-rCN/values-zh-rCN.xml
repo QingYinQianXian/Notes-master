@@ -5,7 +5,7 @@
         <item>邮件</item>
     </string-array>
     <plurals name="search_results_title">
-        <item quantity="other"><ns1:g id="NUMBER">%1$s</ns1:g> 条符合“<ns1:g id="SEARCH">%2$s</ns1:g>”的搜索结果</item>
+        <item quantity="other"><ns1:g id="NUMBER">%1$s</ns1:g> 条符合"<ns1:g id="SEARCH">%2$s</ns1:g>"的搜索结果</item>
     </plurals>
     <string name="alert_message_delete_folder">确认删除文件夹及所包含的便签吗？</string>
     <string name="alert_message_delete_note">确认要删除该条便签吗?</string>
@@ -16,6 +16,10 @@
     <string name="app_widget4x4">便签4x4</string>
     <string name="button_delete">删除</string>
     <string name="call_record_folder_name">通话便签</string>
+    <string name="clear_all_versions">清除所有版本</string>
+    <string name="clear_all_versions_message">确定要删除该便签的所有版本历史吗？</string>
+    <string name="clear_all_versions_title">清除所有版本</string>
+    <string name="clear_versions_success">已清除 %d 个版本</string>
     <string name="datetime_dialog_cancel">取消</string>
     <string name="datetime_dialog_ok">设置</string>
     <string name="delete_remind_time_message">成功删除提醒</string>
@@ -63,6 +67,8 @@
     <string name="menu_sync">同步</string>
     <string name="menu_sync_cancel">取消同步</string>
     <string name="menu_title_select_folder">选择文件夹</string>
+    <string name="menu_version_history">版本历史</string>
+    <string name="no_version_history">暂无版本历史</string>
     <string name="note_alert_expired">已过期</string>
     <string name="note_link_email">发送邮件</string>
     <string name="note_link_other">打开地图</string>
@@ -89,6 +95,9 @@
     <string name="preferences_title">设置</string>
     <string name="preferences_toast_cannot_change_account">正在同步中，不能修改同步帐号</string>
     <string name="preferences_toast_success_set_accout">同步帐号已设置为%1$s</string>
+    <string name="restore_failed">版本恢复失败</string>
+    <string name="restore_success">版本恢复成功</string>
+    <string name="restore_version">恢复此版本</string>
     <string name="search">便签</string>
     <string name="search_hint">搜索便签</string>
     <string name="search_label">正在搜索便签</string>
@@ -103,6 +112,8 @@
     <string name="ticker_fail">同步失败</string>
     <string name="ticker_success">同步成功</string>
     <string name="ticker_syncing">同步便签...</string>
+    <string name="version_preview_message">时间：%1$s\n\n内容：\n%2$s</string>
+    <string name="version_preview_title">版本预览</string>
     <string name="widget_havenot_content">没有关联内容，点击新建便签。</string>
     <string name="widget_under_visit_mode">访客模式下，便签内容不可见</string>
 </resources>

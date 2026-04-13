@@ -109,6 +109,7 @@ id ll_font_normal
 id ll_font_small
 id ll_font_super
 id menu_alert
+id menu_clear_all_versions
 id menu_delete
 id menu_delete_remind
 id menu_export_text
@@ -121,6 +122,7 @@ id menu_send_to_desktop
 id menu_setting
 id menu_share
 id menu_sync
+id menu_version_history
 id minute
 id move
 id navigation_bar
@@ -141,6 +143,8 @@ id tv_name
 id tv_time
 id tv_title
 id tv_title_bar
+id tv_version_date
+id tv_version_snippet
 id widget_bg_image
 id widget_text
 layout account_dialog_title
@@ -154,6 +158,8 @@ layout note_item
 layout note_list
 layout note_list_dropdown_menu
 layout note_list_footer
+layout note_version_item
+layout note_version_list
 layout settings_header
 layout widget_2x
 layout widget_4x
@@ -163,6 +169,7 @@ menu note_edit
 menu note_list
 menu note_list_dropdown
 menu note_list_options
+menu note_version_menu
 menu sub_folder
 plurals search_results_title
 raw introduction
@@ -175,6 +182,10 @@ string app_widget2x2
 string app_widget4x4
 string button_delete
 string call_record_folder_name
+string clear_all_versions
+string clear_all_versions_message
+string clear_all_versions_title
+string clear_versions_success
 string datetime_dialog_cancel
 string datetime_dialog_ok
 string delete_remind_time_message
@@ -225,6 +236,8 @@ string menu_share
 string menu_sync
 string menu_sync_cancel
 string menu_title_select_folder
+string menu_version_history
+string no_version_history
 string note_alert_expired
 string note_link_email
 string note_link_other
@@ -252,6 +265,9 @@ string preferences_menu_remove_account
 string preferences_title
 string preferences_toast_cannot_change_account
 string preferences_toast_success_set_accout
+string restore_failed
+string restore_success
+string restore_version
 string search
 string search_hint
 string search_label
@@ -266,6 +282,8 @@ string ticker_cancel
 string ticker_fail
 string ticker_success
 string ticker_syncing
+string version_preview_message
+string version_preview_title
 string widget_havenot_content
 string widget_under_visit_mode
 style HighlightTextAppearancePrimary

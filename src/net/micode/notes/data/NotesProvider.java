@@ -32,6 +32,7 @@ import android.util.Log;
 import net.micode.notes.R;
 import net.micode.notes.data.Notes.DataColumns;
 import net.micode.notes.data.Notes.NoteColumns;
+import net.micode.notes.data.Notes.VersionColumns;
 import net.micode.notes.data.NotesDatabaseHelper.TABLE;
 
 
@@ -50,6 +51,9 @@ public class NotesProvider extends ContentProvider {
     private static final int URI_SEARCH          = 5;
     private static final int URI_SEARCH_SUGGEST  = 6;
 
+    private static final int URI_VERSION         = 7;
+    private static final int URI_VERSION_ITEM    = 8;
+
     static {
         mMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         mMatcher.addURI(Notes.AUTHORITY, "note", URI_NOTE);
@@ -59,6 +63,8 @@ public class NotesProvider extends ContentProvider {
         mMatcher.addURI(Notes.AUTHORITY, "search", URI_SEARCH);
         mMatcher.addURI(Notes.AUTHORITY, SearchManager.SUGGEST_URI_PATH_QUERY, URI_SEARCH_SUGGEST);
         mMatcher.addURI(Notes.AUTHORITY, SearchManager.SUGGEST_URI_PATH_QUERY + "/*", URI_SEARCH_SUGGEST);
+        mMatcher.addURI(Notes.AUTHORITY, "note_version", URI_VERSION);
+        mMatcher.addURI(Notes.AUTHORITY, "note_version/#", URI_VERSION_ITEM);
     }
 
     /**
@@ -98,8 +104,16 @@ public class NotesProvider extends ContentProvider {
                 break;
             case URI_NOTE_ITEM:
                 id = uri.getPathSegments().get(1);
-                c = db.query(TABLE.NOTE, projection, NoteColumns.ID + "=" + id
-                        + parseSelection(selection), selectionArgs, null, null, sortOrder);
+                String noteSelectionWithId = NoteColumns.ID + "=?" + parseSelection(selection);
+                String[] noteSelectionArgsWithId = new String[] { id };
+                if (selectionArgs != null) {
+                    // 合并参数
+                    String[] newSelectionArgs = new String[selectionArgs.length + 1];
+                    newSelectionArgs[0] = id;
+                    System.arraycopy(selectionArgs, 0, newSelectionArgs, 1, selectionArgs.length);
+                    noteSelectionArgsWithId = newSelectionArgs;
+                }
+                c = db.query(TABLE.NOTE, projection, noteSelectionWithId, noteSelectionArgsWithId, null, null, sortOrder);
                 break;
             case URI_DATA:
                 c = db.query(TABLE.DATA, projection, selection, selectionArgs, null, null,
@@ -107,8 +121,16 @@ public class NotesProvider extends ContentProvider {
                 break;
             case URI_DATA_ITEM:
                 id = uri.getPathSegments().get(1);
-                c = db.query(TABLE.DATA, projection, DataColumns.ID + "=" + id
-                        + parseSelection(selection), selectionArgs, null, null, sortOrder);
+                String dataSelectionWithId = DataColumns.ID + "=?" + parseSelection(selection);
+                String[] dataSelectionArgsWithId = new String[] { id };
+                if (selectionArgs != null) {
+                    // 合并参数
+                    String[] newSelectionArgs = new String[selectionArgs.length + 1];
+                    newSelectionArgs[0] = id;
+                    System.arraycopy(selectionArgs, 0, newSelectionArgs, 1, selectionArgs.length);
+                    dataSelectionArgsWithId = newSelectionArgs;
+                }
+                c = db.query(TABLE.DATA, projection, dataSelectionWithId, dataSelectionArgsWithId, null, null, sortOrder);
                 break;
             case URI_SEARCH:
             case URI_SEARCH_SUGGEST:
@@ -138,6 +160,23 @@ public class NotesProvider extends ContentProvider {
                     Log.e(TAG, "got exception: " + ex.toString());
                 }
                 break;
+            case URI_VERSION:
+                c = db.query(TABLE.VERSION, projection, selection, selectionArgs, null, null,
+                        sortOrder);
+                break;
+            case URI_VERSION_ITEM:
+                id = uri.getPathSegments().get(1);
+                String selectionWithId = VersionColumns.ID + "=?" + parseSelection(selection);
+                String[] selectionArgsWithId = new String[] { id };
+                if (selectionArgs != null) {
+                    // 合并参数
+                    String[] newSelectionArgs = new String[selectionArgs.length + 1];
+                    newSelectionArgs[0] = id;
+                    System.arraycopy(selectionArgs, 0, newSelectionArgs, 1, selectionArgs.length);
+                    selectionArgsWithId = newSelectionArgs;
+                }
+                c = db.query(TABLE.VERSION, projection, selectionWithId, selectionArgsWithId, null, null, sortOrder);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
@@ -162,6 +201,9 @@ public class NotesProvider extends ContentProvider {
                     Log.d(TAG, "Wrong data format without note id:" + values.toString());
                 }
                 insertedId = dataId = db.insert(TABLE.DATA, null, values);
+                break;
+            case URI_VERSION:
+                insertedId = db.insert(TABLE.VERSION, null, values);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
@@ -202,8 +244,16 @@ public class NotesProvider extends ContentProvider {
                 if (noteId <= 0) {
                     break;
                 }
-                count = db.delete(TABLE.NOTE,
-                        NoteColumns.ID + "=" + id + parseSelection(selection), selectionArgs);
+                String noteDeleteSelectionWithId = NoteColumns.ID + "=?" + parseSelection(selection);
+                String[] noteDeleteSelectionArgsWithId = new String[] { id };
+                if (selectionArgs != null) {
+                    // 合并参数
+                    String[] newSelectionArgs = new String[selectionArgs.length + 1];
+                    newSelectionArgs[0] = id;
+                    System.arraycopy(selectionArgs, 0, newSelectionArgs, 1, selectionArgs.length);
+                    noteDeleteSelectionArgsWithId = newSelectionArgs;
+                }
+                count = db.delete(TABLE.NOTE, noteDeleteSelectionWithId, noteDeleteSelectionArgsWithId);
                 break;
             case URI_DATA:
                 count = db.delete(TABLE.DATA, selection, selectionArgs);
@@ -211,9 +261,33 @@ public class NotesProvider extends ContentProvider {
                 break;
             case URI_DATA_ITEM:
                 id = uri.getPathSegments().get(1);
-                count = db.delete(TABLE.DATA,
-                        DataColumns.ID + "=" + id + parseSelection(selection), selectionArgs);
+                String dataDeleteSelectionWithId = DataColumns.ID + "=?" + parseSelection(selection);
+                String[] dataDeleteSelectionArgsWithId = new String[] { id };
+                if (selectionArgs != null) {
+                    // 合并参数
+                    String[] newSelectionArgs = new String[selectionArgs.length + 1];
+                    newSelectionArgs[0] = id;
+                    System.arraycopy(selectionArgs, 0, newSelectionArgs, 1, selectionArgs.length);
+                    dataDeleteSelectionArgsWithId = newSelectionArgs;
+                }
+                count = db.delete(TABLE.DATA, dataDeleteSelectionWithId, dataDeleteSelectionArgsWithId);
                 deleteData = true;
+                break;
+            case URI_VERSION:
+                count = db.delete(TABLE.VERSION, selection, selectionArgs);
+                break;
+            case URI_VERSION_ITEM:
+                id = uri.getPathSegments().get(1);
+                String versionDeleteSelectionWithId = VersionColumns.ID + "=?" + parseSelection(selection);
+                String[] versionDeleteSelectionArgsWithId = new String[] { id };
+                if (selectionArgs != null) {
+                    // 合并参数
+                    String[] newSelectionArgs = new String[selectionArgs.length + 1];
+                    newSelectionArgs[0] = id;
+                    System.arraycopy(selectionArgs, 0, newSelectionArgs, 1, selectionArgs.length);
+                    versionDeleteSelectionArgsWithId = newSelectionArgs;
+                }
+                count = db.delete(TABLE.VERSION, versionDeleteSelectionWithId, versionDeleteSelectionArgsWithId);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
@@ -241,8 +315,16 @@ public class NotesProvider extends ContentProvider {
             case URI_NOTE_ITEM:
                 id = uri.getPathSegments().get(1);
                 increaseNoteVersion(Long.valueOf(id), selection, selectionArgs);
-                count = db.update(TABLE.NOTE, values, NoteColumns.ID + "=" + id
-                        + parseSelection(selection), selectionArgs);
+                String noteUpdateSelectionWithId = NoteColumns.ID + "=?" + parseSelection(selection);
+                String[] noteUpdateSelectionArgsWithId = new String[] { id };
+                if (selectionArgs != null) {
+                    // 合并参数
+                    String[] newSelectionArgs = new String[selectionArgs.length + 1];
+                    newSelectionArgs[0] = id;
+                    System.arraycopy(selectionArgs, 0, newSelectionArgs, 1, selectionArgs.length);
+                    noteUpdateSelectionArgsWithId = newSelectionArgs;
+                }
+                count = db.update(TABLE.NOTE, values, noteUpdateSelectionWithId, noteUpdateSelectionArgsWithId);
                 break;
             case URI_DATA:
                 count = db.update(TABLE.DATA, values, selection, selectionArgs);
@@ -250,9 +332,33 @@ public class NotesProvider extends ContentProvider {
                 break;
             case URI_DATA_ITEM:
                 id = uri.getPathSegments().get(1);
-                count = db.update(TABLE.DATA, values, DataColumns.ID + "=" + id
-                        + parseSelection(selection), selectionArgs);
+                String dataUpdateSelectionWithId = DataColumns.ID + "=?" + parseSelection(selection);
+                String[] dataUpdateSelectionArgsWithId = new String[] { id };
+                if (selectionArgs != null) {
+                    // 合并参数
+                    String[] newSelectionArgs = new String[selectionArgs.length + 1];
+                    newSelectionArgs[0] = id;
+                    System.arraycopy(selectionArgs, 0, newSelectionArgs, 1, selectionArgs.length);
+                    dataUpdateSelectionArgsWithId = newSelectionArgs;
+                }
+                count = db.update(TABLE.DATA, values, dataUpdateSelectionWithId, dataUpdateSelectionArgsWithId);
                 updateData = true;
+                break;
+            case URI_VERSION:
+                count = db.update(TABLE.VERSION, values, selection, selectionArgs);
+                break;
+            case URI_VERSION_ITEM:
+                id = uri.getPathSegments().get(1);
+                String versionUpdateSelectionWithId = VersionColumns.ID + "=?" + parseSelection(selection);
+                String[] versionUpdateSelectionArgsWithId = new String[] { id };
+                if (selectionArgs != null) {
+                    // 合并参数
+                    String[] newSelectionArgs = new String[selectionArgs.length + 1];
+                    newSelectionArgs[0] = id;
+                    System.arraycopy(selectionArgs, 0, newSelectionArgs, 1, selectionArgs.length);
+                    versionUpdateSelectionArgsWithId = newSelectionArgs;
+                }
+                count = db.update(TABLE.VERSION, values, versionUpdateSelectionWithId, versionUpdateSelectionArgsWithId);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
