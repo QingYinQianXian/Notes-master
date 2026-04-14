@@ -9,7 +9,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8492c9b6-daae-4b60-a578-8e133ec20443" name="更改" comment="至少可以正常的运行" />
+    <list default="true" id="8492c9b6-daae-4b60-a578-8e133ec20443" name="更改" comment="至少可以正常的运行">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,7 +90,7 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "7d9ca3fb",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "memory.settings.postsync.last.time.stamp": "1774596323669",
@@ -213,13 +219,13 @@
       <map>
         <entry key="net.micode.notes">
           <value>
-            <CheckInfo lastCheckTimestamp="1775551829679" />
+            <CheckInfo lastCheckTimestamp="1776165249018" />
           </value>
         </entry>
         <entry />
         <entry key="net.micode.notes.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1775551829679" />
+            <CheckInfo lastCheckTimestamp="1776165249018" />
           </value>
         </entry>
       </map>
