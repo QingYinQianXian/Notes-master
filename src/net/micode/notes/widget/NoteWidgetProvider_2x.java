@@ -23,7 +23,10 @@ import net.micode.notes.R;
 import net.micode.notes.data.Notes;
 import net.micode.notes.tool.ResourceParser;
 
-
+/**
+ * 2x2大小便签小部件提供器类
+ * 负责管理2x2大小的便签小部件
+ */
 public class NoteWidgetProvider_2x extends NoteWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

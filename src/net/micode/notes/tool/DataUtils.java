@@ -34,9 +34,21 @@ import net.micode.notes.ui.NotesListAdapter.AppWidgetAttribute;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-
+/**
+ * 数据工具类
+ * 提供便签数据的批量操作工具方法
+ * 包括批量删除、移动便签等功能
+ */
 public class DataUtils {
+    // 日志标签
     public static final String TAG = "DataUtils";
+    
+    /**
+     * 批量删除便签
+     * @param resolver 内容解析器
+     * @param ids 要删除的便签ID集合
+     * @return true表示删除成功，false表示删除失败
+     */
     public static boolean batchDeleteNotes(ContentResolver resolver, HashSet<Long> ids) {
         if (ids == null) {
             Log.d(TAG, "the ids is null");
@@ -72,6 +84,13 @@ public class DataUtils {
         return false;
     }
 
+    /**
+     * 移动便签到指定文件夹
+     * @param resolver 内容解析器
+     * @param id 便签ID
+     * @param srcFolderId 源文件夹ID
+     * @param desFolderId 目标文件夹ID
+     */
     public static void moveNoteToFoler(ContentResolver resolver, long id, long srcFolderId, long desFolderId) {
         ContentValues values = new ContentValues();
         values.put(NoteColumns.PARENT_ID, desFolderId);
@@ -80,6 +99,13 @@ public class DataUtils {
         resolver.update(ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, id), values, null, null);
     }
 
+    /**
+     * 批量移动便签到指定文件夹
+     * @param resolver 内容解析器
+     * @param ids 要移动的便签ID集合
+     * @param folderId 目标文件夹ID
+     * @return true表示移动成功，false表示移动失败
+     */
     public static boolean batchMoveToFolder(ContentResolver resolver, HashSet<Long> ids,
             long folderId) {
         if (ids == null) {
@@ -112,7 +138,9 @@ public class DataUtils {
     }
 
     /**
-     * Get the all folder count except system folders {@link Notes#TYPE_SYSTEM}}
+     * 获取用户文件夹数量（不包括系统文件夹）
+     * @param resolver 内容解析器
+     * @return 用户文件夹数量
      */
     public static int getUserFolderCount(ContentResolver resolver) {
         Cursor cursor =resolver.query(Notes.CONTENT_NOTE_URI,
@@ -224,6 +252,12 @@ public class DataUtils {
         return set;
     }
 
+    /**
+     * 根据便签ID获取电话号码
+     * @param resolver 内容解析器
+     * @param noteId 便签ID
+     * @return 电话号码
+     */
     public static String getCallNumberByNoteId(ContentResolver resolver, long noteId) {
         Cursor cursor = resolver.query(Notes.CONTENT_DATA_URI,
                 new String [] { CallNote.PHONE_NUMBER },
@@ -243,6 +277,13 @@ public class DataUtils {
         return "";
     }
 
+    /**
+     * 根据电话号码和通话日期获取便签ID
+     * @param resolver 内容解析器
+     * @param phoneNumber 电话号码
+     * @param callDate 通话日期（毫秒级时间戳）
+     * @return 便签ID
+     */
     public static long getNoteIdByPhoneNumberAndCallDate(ContentResolver resolver, String phoneNumber, long callDate) {
         Cursor cursor = resolver.query(Notes.CONTENT_DATA_URI,
                 new String [] { CallNote.NOTE_ID },
@@ -264,6 +305,12 @@ public class DataUtils {
         return 0;
     }
 
+    /**
+     * 根据便签ID获取便签内容
+     * @param resolver 内容解析器
+     * @param noteId 便签ID
+     * @return 便签内容
+     */
     public static String getSnippetById(ContentResolver resolver, long noteId) {
         Cursor cursor = resolver.query(Notes.CONTENT_NOTE_URI,
                 new String [] { NoteColumns.SNIPPET },

@@ -47,46 +47,74 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
-
+/**
+ * Google Tasks管理器类
+ * 负责管理便签与Google Tasks之间的同步
+ * 负责管理便签与Google Tasks之间的同步
+ * 提供同步、创建、更新、删除等功能
+ */
 public class GTaskManager {
+    // 日志标签
     private static final String TAG = GTaskManager.class.getSimpleName();
 
+    // 同步成功状态
     public static final int STATE_SUCCESS = 0;
 
+    // 网络错误状态
     public static final int STATE_NETWORK_ERROR = 1;
 
+    // 内部错误状态
     public static final int STATE_INTERNAL_ERROR = 2;
 
+    // 同步进行中状态
     public static final int STATE_SYNC_IN_PROGRESS = 3;
 
+    // 同步取消状态
     public static final int STATE_SYNC_CANCELLED = 4;
 
+    // 单例实例
     private static GTaskManager mInstance = null;
 
+    // 活动对象
     private Activity mActivity;
 
+    // 上下文对象
     private Context mContext;
 
+    // 内容解析器
     private ContentResolver mContentResolver;
 
+    // 是否正在同步
     private boolean mSyncing;
 
+    // 是否已取消
     private boolean mCancelled;
 
+    // Google任务列表映射表
     private HashMap<String, TaskList> mGTaskListHashMap;
 
+    // Google任务映射表
     private HashMap<String, Node> mGTaskHashMap;
 
+    // 元数据映射表
     private HashMap<String, MetaData> mMetaHashMap;
 
+    // 元数据列表
     private TaskList mMetaList;
 
+    // 本地删除ID映射表
     private HashSet<Long> mLocalDeleteIdMap;
 
+    // Google任务ID到便签ID的映射表
     private HashMap<String, Long> mGidToNid;
 
+    // 便签ID到Google任务ID的映射表
     private HashMap<Long, String> mNidToGid;
 
+    /**
+     * 构造函数
+     * 初始化各种映射表和标志位
+     */
     private GTaskManager() {
         mSyncing = false;
         mCancelled = false;
@@ -99,6 +127,10 @@ public class GTaskManager {
         mNidToGid = new HashMap<Long, String>();
     }
 
+    /**
+     * 获取GTaskManager的单例实例
+     * @return GTaskManager实例
+     */
     public static synchronized GTaskManager getInstance() {
         if (mInstance == null) {
             mInstance = new GTaskManager();
@@ -106,11 +138,21 @@ public class GTaskManager {
         return mInstance;
     }
 
+    /**
+     * 设置活动上下文
+     * @param activity 活动对象
+     */
     public synchronized void setActivityContext(Activity activity) {
-        // used for getting authtoken
+        // 用于获取认证令牌
         mActivity = activity;
     }
 
+    /**
+     * 同步便签到Google Tasks
+     * @param context 上下文对象
+     * @param asyncTask 异步任务对象
+     * @return 同步状态码
+     */
     public int sync(Context context, GTaskASyncTask asyncTask) {
         if (mSyncing) {
             Log.d(TAG, "Sync is in progress");
@@ -131,14 +173,14 @@ public class GTaskManager {
             GTaskClient client = GTaskClient.getInstance();
             client.resetUpdateArray();
 
-            // login google task
+            // 登录Google Tasks
             if (!mCancelled) {
                 if (!client.login(mActivity)) {
                     throw new NetworkFailureException("login google task failed");
                 }
             }
 
-            // get the task list from google
+            // 从Google获取任务列表
             asyncTask.publishProgess(mContext.getString(R.string.sync_progress_init_list));
             initGTaskList();
 

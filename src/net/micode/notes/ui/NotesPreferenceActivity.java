@@ -46,6 +46,11 @@ import net.micode.notes.R;
 import net.micode.notes.data.Notes;
 import net.micode.notes.data.Notes.NoteColumns;
 import net.micode.notes.gtask.remote.GTaskSyncService;
+/**
+ * 偏好设置活动类
+ * 用于显示和管理应用的偏好设置
+ */
+
 
 
 public class NotesPreferenceActivity extends PreferenceActivity {

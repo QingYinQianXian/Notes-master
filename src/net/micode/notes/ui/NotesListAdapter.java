@@ -29,6 +29,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+/**
+ * 便签列表适配器类
+ * 负责将便签数据绑定到便签列表项视图上
+ */
+
 
 
 public class NotesListAdapter extends CursorAdapter {
