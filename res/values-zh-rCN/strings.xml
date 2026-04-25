@@ -136,4 +136,6 @@
     <string name="clear_all_versions_message">确定要删除该便签的所有版本历史吗？</string>
     <string name="clear_versions_success">已清除 %d 个版本</string>
 
+    <string name="word_count">字数：%d</string>
+
 </resources>

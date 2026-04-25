@@ -145,4 +145,6 @@
     <string name="clear_all_versions_message">Are you sure you want to delete all version history for this note?</string>
     <string name="clear_versions_success">Cleared %d versions</string>
 
+    <string name="word_count">Words: %d</string>
+
 </resources>

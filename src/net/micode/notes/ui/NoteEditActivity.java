@@ -33,6 +33,7 @@ import android.preference.PreferenceManager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.format.DateUtils;
 import android.text.style.BackgroundColorSpan;
 import android.util.Log;
@@ -80,6 +81,8 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         public ImageView ivAlertIcon;
 
         public TextView tvAlertDate;
+
+        public TextView tvWordCount;
 
         public ImageView ibSetBgColor;
     }
@@ -295,6 +298,15 @@ public class NoteEditActivity extends Activity implements OnClickListener,
          * is not ready
          */
         showAlertHeader();
+        updateWordCount(mWorkingNote.getContent());
+    }
+
+    private void updateWordCount(String text) {
+        int count = 0;
+        if (!TextUtils.isEmpty(text)) {
+            count = text.replace("\n", "").replace(" ", "").length();
+        }
+        mNoteHeaderHolder.tvWordCount.setText(getString(R.string.word_count, count));
     }
 
     private void showAlertHeader() {
@@ -381,6 +393,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         mNoteHeaderHolder.tvModified = (TextView) findViewById(R.id.tv_modified_date);
         mNoteHeaderHolder.ivAlertIcon = (ImageView) findViewById(R.id.iv_alert_icon);
         mNoteHeaderHolder.tvAlertDate = (TextView) findViewById(R.id.tv_alert_date);
+        mNoteHeaderHolder.tvWordCount = (TextView) findViewById(R.id.tv_word_count);
         mNoteHeaderHolder.ibSetBgColor = (ImageView) findViewById(R.id.btn_set_bg_color);
         mNoteHeaderHolder.ibSetBgColor.setOnClickListener(this);
         mNoteEditor = (EditText) findViewById(R.id.note_edit_view);
@@ -407,6 +420,21 @@ public class NoteEditActivity extends Activity implements OnClickListener,
             mFontSizeId = ResourceParser.BG_DEFAULT_FONT_SIZE;
         }
         mEditTextList = (LinearLayout) findViewById(R.id.note_edit_list);
+
+        mNoteEditor.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(android.text.Editable s) {
+                updateWordCount(s.toString());
+            }
+        });
     }
 
     @Override
@@ -795,6 +823,7 @@ public class NoteEditActivity extends Activity implements OnClickListener,
             mEditTextList.setVisibility(View.GONE);
             mNoteEditor.setVisibility(View.VISIBLE);
         }
+        updateWordCount(mWorkingNote.getContent());
     }
 
     private boolean getWorkingText() {

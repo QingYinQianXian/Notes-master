@@ -124,4 +124,6 @@
         <item quantity="other"><xliff:g id="NUMBER">%1$s</xliff:g> 條符合”<xliff:g id="SEARCH">%2$s</xliff:g>“的搜尋結果</item>
     </plurals>
 
+    <string name="word_count">字數：%d</string>
+
 </resources>
